@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Overcomers",
+    "slug": "Overcomers",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/rccg-logo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/rccg-logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "engine": "jsc"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/rccg-logo.png",
+        "backgroundColor": "#ffffff"
+      },
+      "engine": "jsc"
+    },
+    "web": {
+      "favicon": "./assets/rccg-logo.png"
+    }
+  }
+}
