@@ -4,6 +4,50 @@ export const Background = styled.View`
 flex: 1;
 background: white;
 ` 
+export const Box = styled.View`
+background: gray;
+width: 90%;
+margin: 0 auto;
+display: flex;
+border-radius: 10px;
+padding: 10px;
+`
+
+export const BoxText = styled.Text`
+font-size: 18px;
+color: #fff;
+font-weight: bold;
+margin-bottom: 10px;
+`
+
+export const SmallBox = styled.View`
+width: 18px;
+height: 18px;
+`
+
+export const FlexBox = styled.View`
+display: flex;
+flex-direction: row;
+justify-content: space-between;
+`
+
+export const FlexItem = styled.Text`
+font-size: 18px;
+color: #fff;
+font-weight: bold;
+margin-bottom: 10px;
+`
+
+export const FlexChart = styled.View`
+border-width: 10px;
+border-top-color: #f5f5f5;
+border-right-color: #f5f5f5;
+border-bottom-color: #f5f5f5;
+justify-content: center;
+align-items: center;
+`
+
+
 
 export const Container = styled.View`
 margin-left: 15px;
@@ -24,6 +68,15 @@ font-size: 18px;
 color: #FFF;
 font-weight: bold;
 `
+export const Header = styled.Text`
+font-size: 18px;
+color: #000;
+font-weight: bold;
+text-align: center;
+margin-top: 5%;
+margin-bottom: 5%;
+`
+
 export const Label = styled.Text`
 font-size: 18px;
 color: #000;
@@ -72,7 +125,7 @@ width: 90%;
 margin-top: 20px;
 align-items: center;
 justify-content: center;
-background-color: #00b94a;
+background-color: blue;
 border-radius: 10px;
 ` 
 

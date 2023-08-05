@@ -48,10 +48,10 @@ export default function Finance() {
         <Background>
 
           <SafeAreaView style={{ alignItems: 'center'}}>
-            <SubmitButton onPress={ () => navigation.navigate('new finance')}>
+            <SubmitButton onPress={ () => navigation.navigate('newFinance')}>
               <ButtonText>Record New Finances</ButtonText>
             </SubmitButton>
-            <SubmitButton onPress={ () => navigation.navigate('view finance')}>
+            <SubmitButton onPress={ () => navigation.navigate('viewFinance')}>
               <ButtonText>View Finances</ButtonText>
             </SubmitButton>
           </SafeAreaView>

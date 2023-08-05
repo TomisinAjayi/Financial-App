@@ -39,8 +39,32 @@ function FinanceStackScreen() {
         name="Financial Analysis"
         component={Finance}
       />
-      <FinanceStack.Screen name="new finance" component={NewFinance} options={{ headerBackTitleVisible: false, }} />
-      <FinanceStack.Screen name="view finance" component={ViewFinance} options={{ headerBackTitleVisible: false, }} />
+      <FinanceStack.Screen name="newFinance" component={NewFinance} options={{ 
+        // headerBackTitleVisible: false, 
+        // headerShadowVisible: false, 
+        // headerTintColor: '#000',
+        // headerTitle: 'New Finance', 
+        // headerTitleStyle: {
+        //   // fontFamily: 'Roboto',
+        //   fontStyle: 'normal',
+        //   fontWeight: '700',
+        //   color: 'rgba(0, 0, 0, 0.85)',
+        // }, 
+        headerShown: false
+       }} />
+      <FinanceStack.Screen name="viewFinance" component={ViewFinance} options={{ 
+        // headerBackTitleVisible: false, 
+        // headerShadowVisible: false, 
+        // headerTintColor: '#000',
+        // headerTitle: 'View Finance', 
+        // headerTitleStyle: {
+        //   // fontFamily: 'Roboto',
+        //   fontStyle: 'normal',
+        //   fontWeight: '700',
+        //   color: 'rgba(0, 0, 0, 0.85)',
+        // },
+        headerShown: false
+       }} />
     </FinanceStack.Navigator>
   );
 }
@@ -54,7 +78,7 @@ function AttendanceStackScreen() {
         name="Weekly Attendance"
         component={Attendance}
       />
-      <AttendanceStack.Screen name="new attendance" component={NewAttendance} options={{ headerBackTitleVisible: false, }} />
+      <AttendanceStack.Screen name="new attendance" component={NewAttendance} options={{ headerBackTitleVisible: false,   }} />
       <AttendanceStack.Screen name="view attendance" component={ViewAttendance} options={{ headerBackTitleVisible: false, }} />
     </AttendanceStack.Navigator>
   );

@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/auth'
-import { Background, Input, Label,RadioLabel, RadioText, RadioField, RadioInput, SubmitButton, SubmitText, BottomNavigationViewStyle, BottomSheetHead, ClearBtn, BottomSheetHeadText, RadioButtonGroup, RadioWrapper, Outer, Inner } from './style'
-import Header from '../../components/Header/index'
+import { Background, Input, Label,RadioLabel, RadioText, RadioField, RadioInput, SubmitButton, SubmitText, BottomNavigationViewStyle, BottomSheetHead, ClearBtn, BottomSheetHeadText, RadioButtonGroup, RadioWrapper, Outer, Inner, Header } from './style'
 import HistoricoList from '../../components/HistoricoList';
 import firebase from '../../services/firebaseConnection';
 import { format, isPast } from 'date-fns';
@@ -37,7 +36,7 @@ export default function NewFinance() {
   };
 
   const handleSubmit = () => {
-    navigation.navigate('view finance');
+    navigation.navigate('viewFinance');
   }
 
   return (
@@ -48,6 +47,7 @@ export default function NewFinance() {
 
               <SafeAreaView>
                 {/* <Picker onChange={setTipo} tipo={tipo} /> */}
+                <Header>Create New Finance</Header>
                 <Label>Date: {formattedDate}</Label>
                 {/* <Text>{selectedDate.toDateString()}</Text>
                 <DatePickerIOS
@@ -55,7 +55,7 @@ export default function NewFinance() {
                   onDateChange={handleDateChange}
                   mode="date"
                 /> */}
-                <RadioLabel>Type of Service:</RadioLabel>
+                <RadioLabel>Type of Service</RadioLabel>
                 <RadioField onPress={toggleBottomNavigationView}>
                   <RadioText>{service}</RadioText>
                 </RadioField>
