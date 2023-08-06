@@ -1,5 +1,5 @@
 import React from "react";
-import Home from '../pages/Home'
+import Home from '../pages/Home';
 import Profile from "../pages/Profile";
 // import New from "../pages/New";
 import Finance from "../pages/Finances";
@@ -40,29 +40,9 @@ function FinanceStackScreen() {
         component={Finance}
       />
       <FinanceStack.Screen name="newFinance" component={NewFinance} options={{ 
-        // headerBackTitleVisible: false, 
-        // headerShadowVisible: false, 
-        // headerTintColor: '#000',
-        // headerTitle: 'New Finance', 
-        // headerTitleStyle: {
-        //   // fontFamily: 'Roboto',
-        //   fontStyle: 'normal',
-        //   fontWeight: '700',
-        //   color: 'rgba(0, 0, 0, 0.85)',
-        // }, 
         headerShown: false
        }} />
       <FinanceStack.Screen name="viewFinance" component={ViewFinance} options={{ 
-        // headerBackTitleVisible: false, 
-        // headerShadowVisible: false, 
-        // headerTintColor: '#000',
-        // headerTitle: 'View Finance', 
-        // headerTitleStyle: {
-        //   // fontFamily: 'Roboto',
-        //   fontStyle: 'normal',
-        //   fontWeight: '700',
-        //   color: 'rgba(0, 0, 0, 0.85)',
-        // },
         headerShown: false
        }} />
     </FinanceStack.Navigator>
@@ -78,8 +58,8 @@ function AttendanceStackScreen() {
         name="Weekly Attendance"
         component={Attendance}
       />
-      <AttendanceStack.Screen name="new attendance" component={NewAttendance} options={{ headerBackTitleVisible: false,   }} />
-      <AttendanceStack.Screen name="view attendance" component={ViewAttendance} options={{ headerBackTitleVisible: false, }} />
+      <AttendanceStack.Screen name="newAttendance" component={NewAttendance} options={{ headerShown: false   }} />
+      <AttendanceStack.Screen name="viewAttendance" component={ViewAttendance} options={{ headerShown: false }} />
     </AttendanceStack.Navigator>
   );
 }
