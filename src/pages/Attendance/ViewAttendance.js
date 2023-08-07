@@ -1,31 +1,31 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/auth'
-import { Background, Input, Label,RadioLabel, RadioText, RadioField, RadioInput, SubmitButton, SubmitText, BottomNavigationViewStyle, BottomSheetHead, ClearBtn, BottomSheetHeadText, RadioButtonGroup, RadioWrapper, Outer, Inner } from './style'
-import Header from '../../components/Header/index'
-import HistoricoList from '../../components/HistoricoList';
-import firebase from '../../services/firebaseConnection';
-import { format, isPast } from 'date-fns';
-import { Alert,Keyboard,Platform,Pressable,SafeAreaView, Text,TouchableWithoutFeedback, View } from 'react-native';
-import { Entypo } from '@expo/vector-icons'; 
-import RadioButton from '../../components/RadioButton';
-import { BottomSheet } from 'react-native-btr';
-
-const services = ['First Service', 'Second Service', 'Sunday School'];
-const firstservice = ['Sunday Love Offering', 'Minister Tithe', 'General Tithe', 'Workers Offering 1', 'Special Thanksgiving', 'Monthly Thanksgiving 1', 'Pledge', 'First Fruit', 'Child Dedication', 'Others'];
-const secondservice = ['Sunday Love Offering', 'Second Service', 'Sunday School'];
+import { Background, Box, SmallBox, Header, FlexBox, BoxText, FlexChart, FlexItem, Input, Label,RadioLabel, RadioText, RadioField, RadioInput, SubmitButton, SubmitText, BottomNavigationViewStyle, BottomSheetHead, ClearBtn, BottomSheetHeadText, RadioButtonGroup, RadioWrapper, Outer, Inner } from './style'
+import { Alert,Keyboard,Platform,Pressable,SafeAreaView,ActivityIndicator, Text,TouchableWithoutFeedback, View, StyleSheet } from 'react-native';
+import Chart from '../../components/Chart';
 
 export default function ViewAttendance() {
 
-  
-
+  const data = {
+    labels: ["Cash", "Cheque", "Bank Transfer"], // optional
+    data: [1.0, 0.6, 0.4]
+  };
   return (
 
     <Background>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
           <Background>
-
+            
             <SafeAreaView>
-              <Text>View Attendance Here</Text>
+              <Header>Finances Report</Header>
+              <Box>
+                <BoxText>Type of Service</BoxText>
+                <BoxText>Service Event</BoxText>
+                <FlexBox>
+                  <Chart data={data} />
+                </FlexBox>
+                
+              </Box>
             </SafeAreaView>
           </Background>
       </TouchableWithoutFeedback>

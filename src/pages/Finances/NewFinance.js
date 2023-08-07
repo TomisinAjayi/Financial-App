@@ -1,18 +1,12 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { AuthContext } from '../../contexts/auth'
-import { Background, Input, Label,RadioLabel, RadioText, RadioField, RadioInput, SubmitButton, SubmitText, BottomNavigationViewStyle, BottomSheetHead, ClearBtn, BottomSheetHeadText, RadioButtonGroup, RadioWrapper, Outer, Inner, Header } from './style'
-import HistoricoList from '../../components/HistoricoList';
-import firebase from '../../services/firebaseConnection';
-import { format, isPast } from 'date-fns';
+import { Background, DateText, Input, Label,RadioLabel, RadioText, RadioField, RadioInput, SubmitButton, SubmitText, BottomNavigationViewStyle, BottomSheetHead, ClearBtn, BottomSheetHeadText, RadioButtonGroup, RadioWrapper, Outer, Inner, Header } from './style'
 import { Alert,Keyboard,Platform,Pressable,SafeAreaView, Text,TouchableWithoutFeedback, View } from 'react-native';
-import { Entypo } from '@expo/vector-icons'; 
-import RadioButton from '../../components/RadioButton';
 import { BottomSheet } from 'react-native-btr';
 import { useNavigation } from '@react-navigation/native';
 
-const services = ['First Service', 'Second Service', 'Sunday School'];
-const firstservice = ['Sunday Love Offering', 'Minister Tithe', 'General Tithe', 'Workers Offering 1', 'Special Thanksgiving', 'Monthly Thanksgiving 1', 'Pledge', 'First Fruit', 'Child Dedication', 'Others'];
-const secondservice = ['Sunday Love Offering', 'Second Service', 'Sunday School'];
+const services = ['First Service', 'Second Service', 'Sunday School', 'Workers Offering 1'];
+const firstservice = ['Sunday Love Offering1', 'Minister Tithe', 'General Tithe', 'Special Thanksgiving', 'Monthly Thanksgiving 1', 'Pledge', 'First Fruit', 'Child Dedication', 'Others'];
+const secondservice = ['Sunday Love Offering', 'Minister Tithe', 'General Tithe', 'Special Thanksgiving', 'Monthly Thanksgiving 1', 'Pledge', 'First Fruit', 'Child Dedication', 'Others'];
 
 export default function NewFinance() {
   const navigation = useNavigation();
@@ -24,8 +18,13 @@ export default function NewFinance() {
   const [service, setService] = useState("Service");
   const [event, setEvent] = useState("Select Event");
   const [event2, setEvent2] = useState("Select Event");
+  const [visibleFirst, setVisibleFirst] = useState(false);
   const [visible, setVisible] = useState(false);
   const [visibleEvent, setVisibleEvent] = useState(false);
+
+  const toggleBottomNavigationViewFirst = () => {
+    setVisibleFirst(!visibleFirst);
+  };
 
   const toggleBottomNavigationView = () => {
     setVisible(!visible);
@@ -46,17 +45,10 @@ export default function NewFinance() {
           <Background>
 
               <SafeAreaView>
-                {/* <Picker onChange={setTipo} tipo={tipo} /> */}
-                <Header>Create New Finance</Header>
-                <Label>Date: {formattedDate}</Label>
-                {/* <Text>{selectedDate.toDateString()}</Text>
-                <DatePickerIOS
-                  date={selectedDate}
-                  onDateChange={handleDateChange}
-                  mode="date"
-                /> */}
+                <Header>Record New Finance</Header>
+                <DateText>{formattedDate}</DateText>
                 <RadioLabel>Type of Service</RadioLabel>
-                <RadioField onPress={toggleBottomNavigationView}>
+                <RadioField onPress={toggleBottomNavigationViewFirst}>
                   <RadioText>{service}</RadioText>
                 </RadioField>
                 {
@@ -81,12 +73,7 @@ export default function NewFinance() {
                   : 
                   null
                 }
-                {
-                  service === "Sunday School" ? 
-                  null
-                  : 
-                  null
-                }
+                
                 <Label>Enter Total Cash Counted:</Label>
                 <Input
                     placeholder="Cash"
@@ -115,16 +102,16 @@ export default function NewFinance() {
                     // onChangeText={(text) => setValor(text)}
                 />
                 <SubmitButton style={{ marginLeft: '5%'}} onPress={handleSubmit}>
-                  <SubmitText>Submit</SubmitText>
+                  <SubmitText>Record</SubmitText>
                 </SubmitButton>
 
                   
                   <BottomSheet
-                    visible={visible}
+                    visible={visibleFirst}
                     //Toggling the visibility state on the click of the back button
-                    onBackButtonPress={toggleBottomNavigationView}
+                    onBackButtonPress={toggleBottomNavigationViewFirst}
                     //Toggling the visibility state on the clicking out side of the sheet
-                    onBackdropPress={toggleBottomNavigationView}
+                    onBackdropPress={toggleBottomNavigationViewFirst}
                   >
                     <BottomNavigationViewStyle>
                         <View
@@ -134,7 +121,7 @@ export default function NewFinance() {
                             justifyContent: 'center',
                         }}>
                             <BottomSheetHead>
-                                <Pressable onPress={toggleBottomNavigationView}>
+                                <Pressable onPress={toggleBottomNavigationViewFirst}>
                                     <ClearBtn>X</ClearBtn>
                                 </Pressable>
                                 <BottomSheetHeadText>Services</BottomSheetHeadText>
@@ -149,7 +136,7 @@ export default function NewFinance() {
                                               () => {
                                                   setService(list); 
                                                   setTimeout(() => {
-                                                      toggleBottomNavigationView();
+                                                    toggleBottomNavigationViewFirst();
                                                   }, 500);
                                               }
                                               }>
