@@ -1,18 +1,24 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Background, ButtonText, SubmitButton } from './style';
+import { Background, ButtonText, SubmitButton, DateText, Logo } from './style';
 import { Alert,Keyboard,Platform,Pressable,SafeAreaView, Text,TouchableWithoutFeedback, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 export default function Attendance() {
 
-  // Get the current date
+  const currentDate = new Date();
+  const formattedDate = currentDate.toDateString();
+
   const navigation = useNavigation();
-  // Format the date to display in a user-friendly format
 
   return (
 
     <Background>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+        <Background>
+          <DateText>{formattedDate}</DateText>
+          <Logo 
+            source={require('../../assets/rccg-logo.png')}
+          />
 
           <SafeAreaView style={{ alignItems: 'center'}}>
             <SubmitButton onPress={ () => navigation.navigate('newAttendance')}>
@@ -22,6 +28,7 @@ export default function Attendance() {
               <ButtonText>View Attendance</ButtonText>
             </SubmitButton>
           </SafeAreaView>
+        </Background>
       </TouchableWithoutFeedback>
     </Background>
   );

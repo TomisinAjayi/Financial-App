@@ -84,6 +84,7 @@ font-weight: bold;
 text-align: right;
 width: 90%;
 margin: 5% auto;
+font-style: italic;
 `
 
 export const Label = styled.Text`
@@ -134,7 +135,7 @@ width: 90%;
 margin-top: 20px;
 align-items: center;
 justify-content: center;
-background-color: blue;
+background-color: #27166f;
 border-radius: 10px;
 ` 
 

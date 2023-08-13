@@ -15,6 +15,9 @@ export default function NewFinance() {
   // Format the date to display in a user-friendly format
   const formattedDate = currentDate.toDateString();
 
+  const [cash, setCash] = useState();
+  const [cheque, setCheque] = useState();
+  const [bankTransfer, setBankTransfer] = useState();
   const [service, setService] = useState("Service");
   const [event, setEvent] = useState("Select Event");
   const [event2, setEvent2] = useState("Select Event");
@@ -34,8 +37,24 @@ export default function NewFinance() {
     setVisibleEvent(!visibleEvent);
   };
 
+  const showError = () => {
+    Alert.alert(
+      'Are all fields filled?',
+      ' ',
+      [
+        { text: 'No', style: 'cancel' },
+        { text: 'Yes', onPress: () => console.log('OK Pressed') },
+      ],
+      { cancelable: false }
+    );
+  };
+
   const handleSubmit = () => {
-    navigation.navigate('viewFinance');
+    if(service || event || event2 || cash || cheque || bankTransfer === "") {
+      showError();
+    } else {
+      navigation.navigate('viewFinance');
+    }
   }
 
   return (
@@ -79,6 +98,8 @@ export default function NewFinance() {
                     placeholder="Cash"
                     keyboardType="numeric"
                     returnKeyType="next"
+                    defaultValue={cash}
+                    onChange={(e) => setCash(e)}
                     // onSubmitEditing={() => Keyboard.dismiss()}
                     // valor={valor}
                     // onChangeText={(text) => setValor(text)}
@@ -88,6 +109,8 @@ export default function NewFinance() {
                     placeholder="Cheque"
                     keyboardType="numeric"
                     returnKeyType="next"
+                    defaultValue={cheque}
+                    onChange={(e) => setCheque(e)}
                     // onSubmitEditing={() => Keyboard.dismiss()}
                     // valor={valor}
                     // onChangeText={(text) => setValor(text)}
@@ -97,6 +120,8 @@ export default function NewFinance() {
                     placeholder="Bank Transfer"
                     keyboardType="numeric"
                     returnKeyType="next"
+                    defaultValue={bankTransfer}
+                    onChange={(e) => setBankTransfer(e)}
                     // onSubmitEditing={() => Keyboard.dismiss()}
                     // valor={valor}
                     // onChangeText={(text) => setValor(text)}

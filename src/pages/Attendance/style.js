@@ -47,7 +47,22 @@ justify-content: center;
 align-items: center;
 `
 
+export const DateText = styled.Text`
+font-size: 18px;
+color: #000;
+font-weight: bold;
+text-align: right;
+width: 90%;
+margin: 5% auto;
+font-style: italic;
+`
 
+export const Logo = styled.Image`
+width: 30%;
+height: 200px;
+resize-mode: contain;
+margin: 40% auto 0;
+`
 
 export const Container = styled.View`
 margin-left: 15px;
@@ -125,7 +140,7 @@ width: 90%;
 margin-top: 20px;
 align-items: center;
 justify-content: center;
-background-color: blue;
+background-color: #d9251b;
 border-radius: 10px;
 ` 
 
