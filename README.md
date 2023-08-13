@@ -14,15 +14,15 @@ App created with react native + expo. The application is created for a church to
 - Styled components
 
 
-## How do start
-- Backend and Database not authenticated yet
+## How to start
+- Backend and Database not authenticated yet.
 - You can only view user interfaces(UI) for now.
 
 
 ## How do runing (Expo users)
 - clone the repository
-- a)yarn  install
-- b) yarn starrt
+- a) yarn install
+- b) yarn start
 
 
 
