@@ -3,6 +3,9 @@ import { Background, DateText, Input, Label,RadioLabel, RadioText, RadioField, R
 import { Alert,Keyboard,Platform,Pressable,SafeAreaView, Text,TouchableWithoutFeedback, View } from 'react-native';
 import { BottomSheet } from 'react-native-btr';
 import { useNavigation } from '@react-navigation/native';
+import RadioButton from '../../components/RadioButton';
+import axios from 'axios';
+import DatePicker from '../../components/DatePicker';
 
 const services = ['First Service', 'Second Service', 'Sunday School', 'Workers Offering 1'];
 const firstservice = ['Sunday Love Offering1', 'Minister Tithe', 'General Tithe', 'Special Thanksgiving', 'Monthly Thanksgiving 1', 'Pledge', 'First Fruit', 'Child Dedication', 'Others'];
@@ -10,14 +13,10 @@ const secondservice = ['Sunday Love Offering', 'Minister Tithe', 'General Tithe'
 
 export default function NewFinance() {
   const navigation = useNavigation();
-  // Get the current date
-  const currentDate = new Date();
-  // Format the date to display in a user-friendly format
-  const formattedDate = currentDate.toDateString();
 
-  const [cash, setCash] = useState();
-  const [cheque, setCheque] = useState();
-  const [bankTransfer, setBankTransfer] = useState();
+  const [cash, setCash] = useState("0");
+  const [cheque, setCheque] = useState("0");
+  const [bankTransfer, setBankTransfer] = useState("0");
   const [service, setService] = useState("Service");
   const [event, setEvent] = useState("Select Event");
   const [event2, setEvent2] = useState("Select Event");
@@ -37,7 +36,23 @@ export default function NewFinance() {
     setVisibleEvent(!visibleEvent);
   };
 
+  const [financeRecorded, setFinanceRecorded] = useState({
+    cash: 0,
+    cheque: 0,
+    bankTf: 0,
+});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFinanceRecorded(financeRecorded => ({
+        ...financeRecorded,
+        [name]: value
+    }));
+    console.log(`handle change result` + financeRecorded);
+};
+
   const showError = () => {
+    console.log("Service: " + service + ", Event: " + event + ", cash: " + cash + ", Cheque: " + cheque + ", Bank Transfer: " + bankTransfer);
     Alert.alert(
       'Are all fields filled?',
       ' ',
@@ -49,11 +64,34 @@ export default function NewFinance() {
     );
   };
 
-  const handleSubmit = () => {
-    if(service || event || event2 || cash || cheque || bankTransfer === "") {
+  const handleSubmit = async () => {
+    if(service === "") {
       showError();
     } else {
-      navigation.navigate('viewFinance');
+      console.log("Service: " + service + ", Event: " + event + ", cash: " + financeRecorded.cash + ", Cheque: " + financeRecorded.cheque + ", Bank Transfer: " + financeRecorded.bankTf);
+      try {
+        const response = await axios.post(`http://localhost:3000/api/finances/add`, 
+          {
+            event: event,
+            service: service,
+            cash: financeRecorded.cash,
+            cheque: financeRecorded.cheque,
+            bankTf: financeRecorded.bankTf,
+          },
+        {   
+        headers: {
+          "Content-Type": "application/json"
+          }
+        });
+        if(response.status === 201) {
+          navigation.navigate('viewFinance');
+        } else {
+          console.log("finances not sent to db");
+        }
+      } catch {
+        console.log("finances won't pass api");
+      }
+      
     }
   }
 
@@ -65,7 +103,7 @@ export default function NewFinance() {
 
               <SafeAreaView>
                 <Header>Record New Finance</Header>
-                <DateText>{formattedDate}</DateText>
+                <DatePicker />
                 <RadioLabel>Type of Service</RadioLabel>
                 <RadioField onPress={toggleBottomNavigationViewFirst}>
                   <RadioText>{service}</RadioText>
@@ -95,179 +133,77 @@ export default function NewFinance() {
                 
                 <Label>Enter Total Cash Counted:</Label>
                 <Input
-                    placeholder="Cash"
-                    keyboardType="numeric"
-                    returnKeyType="next"
-                    defaultValue={cash}
-                    onChange={(e) => setCash(e)}
-                    // onSubmitEditing={() => Keyboard.dismiss()}
-                    // valor={valor}
-                    // onChangeText={(text) => setValor(text)}
+                  placeholder="Cash"
+                  keyboardType="default"
+                  defaultValue={financeRecorded.cash}
+                  onChange={(e) => handleChange(e)}
+                  // onSubmitEditing={() => Keyboard.dismiss()}
+                  // valor={valor}
+                  // onChangeText={(text) => setValor(text)}
                 />
                 <Label>Enter Total Cheque Collected:</Label>
                 <Input
-                    placeholder="Cheque"
-                    keyboardType="numeric"
-                    returnKeyType="next"
-                    defaultValue={cheque}
-                    onChange={(e) => setCheque(e)}
-                    // onSubmitEditing={() => Keyboard.dismiss()}
-                    // valor={valor}
-                    // onChangeText={(text) => setValor(text)}
+                  placeholder="Cheque"
+                  keyboardType="default"
+                  defaultValue={financeRecorded.cheque}
+                  onChange={(e) => handleChange(e)}
+                  // onSubmitEditing={() => Keyboard.dismiss()}
+                  // valor={valor}
+                  // onChangeText={(text) => setValor(text)}
                 />
                 <Label>Enter Total Bank Transfer:</Label>
                 <Input
-                    placeholder="Bank Transfer"
-                    keyboardType="numeric"
-                    returnKeyType="next"
-                    defaultValue={bankTransfer}
-                    onChange={(e) => setBankTransfer(e)}
-                    // onSubmitEditing={() => Keyboard.dismiss()}
-                    // valor={valor}
-                    // onChangeText={(text) => setValor(text)}
+                  placeholder="Bank Transfer"
+                  keyboardType="default"
+                  defaultValue={financeRecorded.bankTf}
+                  onChange={(e) => handleChange(e)}
+                  // onSubmitEditing={() => Keyboard.dismiss()}
+                  // valor={valor}
+                  // onChangeText={(text) => setValor(text)}
                 />
                 <SubmitButton style={{ marginLeft: '5%'}} onPress={handleSubmit}>
                   <SubmitText>Record</SubmitText>
                 </SubmitButton>
 
                   
-                  <BottomSheet
+                  <RadioButton 
                     visible={visibleFirst}
-                    //Toggling the visibility state on the click of the back button
                     onBackButtonPress={toggleBottomNavigationViewFirst}
-                    //Toggling the visibility state on the clicking out side of the sheet
                     onBackdropPress={toggleBottomNavigationViewFirst}
-                  >
-                    <BottomNavigationViewStyle>
-                        <View
-                        style={{
-                            // flex: 1,
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                        }}>
-                            <BottomSheetHead>
-                                <Pressable onPress={toggleBottomNavigationViewFirst}>
-                                    <ClearBtn>X</ClearBtn>
-                                </Pressable>
-                                <BottomSheetHeadText>Services</BottomSheetHeadText>
-                            </BottomSheetHead>
-                            {/* //radio buttons here  */}
-                            <RadioButtonGroup>
-                                {
-                                  services.map(list => (
-                                      <RadioWrapper key={list}>
-                                          <Text>{list}</Text>
-                                          <Outer onPress={
-                                              () => {
-                                                  setService(list); 
-                                                  setTimeout(() => {
-                                                    toggleBottomNavigationViewFirst();
-                                                  }, 500);
-                                              }
-                                              }>
-                                              {service === list && <Inner />}
-                                          </Outer>
-                                      </RadioWrapper>
-                                 ))
-                                }
-                            </RadioButtonGroup>
-                        </View>
-                    </BottomNavigationViewStyle>
-                  </BottomSheet>
+                    onPress={toggleBottomNavigationViewFirst}
+                    title={'Services'}
+                    options={services}
+                    setOptions={setService}
+                    nameOfField={service}
+                  />
 
                   {
                     service === "First Service" ? 
-                    <BottomSheet
-                    visible={visibleEvent}
-                    //Toggling the visibility state on the click of the back button
-                    onBackButtonPress={toggleBottomNavigationViewEvent}
-                    //Toggling the visibility state on the clicking out side of the sheet
-                    onBackdropPress={toggleBottomNavigationViewEvent}
-                  >
-                    <BottomNavigationViewStyle>
-                        <View
-                        style={{
-                            // flex: 1,
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                        }}>
-                            <BottomSheetHead>
-                                <Pressable onPress={toggleBottomNavigationViewEvent}>
-                                    <ClearBtn>X</ClearBtn>
-                                </Pressable>
-                                <BottomSheetHeadText>Event</BottomSheetHeadText>
-                            </BottomSheetHead>
-                            {/* //radio buttons here  */}
-                            <RadioButtonGroup>
-                                {
-                                  firstservice.map(list => (
-                                      <RadioWrapper key={list}>
-                                          <Text>{list}</Text>
-                                          <Outer onPress={
-                                              () => {
-                                                  setEvent(list); 
-                                                  setTimeout(() => {
-                                                    toggleBottomNavigationViewEvent();
-                                                  }, 500);
-                                              }
-                                              }>
-                                              {event === list && <Inner />}
-                                          </Outer>
-                                      </RadioWrapper>
-                                 ))
-                                }
-                            </RadioButtonGroup>
-                        </View>
-                    </BottomNavigationViewStyle>
-                    </BottomSheet>
+                    <RadioButton 
+                      visible={visibleEvent}
+                      onBackButtonPress={toggleBottomNavigationViewEvent}
+                      onBackdropPress={toggleBottomNavigationViewEvent}
+                      onPress={toggleBottomNavigationViewEvent}
+                      title={'Event'}
+                      options={firstservice}
+                      setOptions={setEvent}
+                      nameOfField={event}
+                    />
                   : 
                   null
                   }
                   {
                     service === "Second Service" ? 
-                    <BottomSheet
-                    visible={visible}
-                    //Toggling the visibility state on the click of the back button
-                    onBackButtonPress={toggleBottomNavigationView}
-                    //Toggling the visibility state on the clicking out side of the sheet
-                    onBackdropPress={toggleBottomNavigationView}
-                  >
-                    <BottomNavigationViewStyle>
-                        <View
-                        style={{
-                            // flex: 1,
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                        }}>
-                            <BottomSheetHead>
-                                <Pressable onPress={toggleBottomNavigationView}>
-                                    <ClearBtn>X</ClearBtn>
-                                </Pressable>
-                                <BottomSheetHeadText>Event</BottomSheetHeadText>
-                            </BottomSheetHead>
-                            {/* //radio buttons here  */}
-                            <RadioButtonGroup>
-                                {
-                                  secondservice.map(list => (
-                                      <RadioWrapper key={list}>
-                                          <Text>{list}</Text>
-                                          <Outer onPress={
-                                              () => {
-                                                  setEvent2(list); 
-                                                  setTimeout(() => {
-                                                      toggleBottomNavigationView();
-                                                  }, 500);
-                                              }
-                                              }>
-                                              {event2 === list && <Inner />}
-                                          </Outer>
-                                      </RadioWrapper>
-                                 ))
-                                }
-                            </RadioButtonGroup>
-                        </View>
-                    </BottomNavigationViewStyle>
-                    </BottomSheet>
+                    <RadioButton 
+                      visible={visible}
+                      onBackButtonPress={toggleBottomNavigationView}
+                      onBackdropPress={toggleBottomNavigationView}
+                      onPress={toggleBottomNavigationView}
+                      title={'Event'}
+                      options={secondservice}
+                      setOptions={setEvent2}
+                      nameOfField={event2}
+                    />
                   : 
                   null
                   }

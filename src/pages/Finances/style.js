@@ -165,10 +165,7 @@ border-width: 1px;
 export const BottomSheetHead = styled.View`
 display: flex;
 flex-direction: row;
-padding-top: 0px;
-padding-right: 216px;
-padding-bottom: 10px;
-padding-left: 32px
+padding: 0px 216px 10px 32px;
 height: 34px;
 top: 26px;
 margin-top: 26px;

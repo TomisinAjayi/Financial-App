@@ -2,11 +2,9 @@ import React, { useContext, useState, useEffect } from 'react';
 import { Background, Button, ButtonText, DateText, Input, Label, Logo, RadioLabel, RadioText, RadioField, RadioInput, SubmitButton, SubmitText, BottomNavigationViewStyle, BottomSheetHead, ClearBtn, BottomSheetHeadText, RadioButtonGroup, RadioWrapper, Outer, Inner } from './style'
 import { Alert,Keyboard,Platform,Pressable,SafeAreaView, Text,TouchableWithoutFeedback, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import DatePicker from '../../components/DatePicker';
 
 export default function Finance() {
-
-  const currentDate = new Date();
-  const formattedDate = currentDate.toDateString();
 
   const navigation = useNavigation();
 
@@ -15,7 +13,7 @@ export default function Finance() {
     <Background>
       <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
         <Background>
-          <DateText>{formattedDate}</DateText>
+          <DatePicker />
           <Logo 
             source={require('../../assets/rccg-logo.png')}
           />

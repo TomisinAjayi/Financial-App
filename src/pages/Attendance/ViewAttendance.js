@@ -7,7 +7,7 @@ import Chart from '../../components/Chart';
 export default function ViewAttendance() {
 
   const data = {
-    labels: ["Cash", "Cheque", "Bank Transfer"], // optional
+    labels: ["Men", "Women", "Children"], // optional
     data: [1.0, 0.6, 0.4]
   };
   return (

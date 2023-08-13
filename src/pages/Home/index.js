@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from 'react';
 import { AuthContext } from '../../contexts/auth'
 import { Background, Button, ButtonText, Nome, Saldo, Container, Title, List, Area, Logout, LogoutText } from './style'
 import { Text } from 'react-native';
+import CurvedChart from '../../components/Chart/CurvedChart';
 // import Header from '../../components/Header/index'
 // import HistoricoList from '../../components/HistoricoList';
 // import firebase from '../../services/firebaseConnection';
@@ -122,6 +123,10 @@ export default function Home() {
   //     })
   // }
 
+  const data = {
+    labels: ["Cash", "Cheque", "Bank Transfer"], // optional
+    data: [1.0, 0.6, 0.4]
+  };
 
   return (
 
@@ -131,7 +136,7 @@ export default function Home() {
 
       <Container>
         <Nome>Welcome, {user && user.nome}</Nome>
-        
+        {/* <CurvedChart data={data} /> */}
       </Container>
 
 
