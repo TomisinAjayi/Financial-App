@@ -119,7 +119,7 @@ margin-top: 15px;
 `
 
 export const Input =  styled.TextInput.attrs({
-    placheolderTextColor: '#222'
+    placeholderTextColor: '#222'
 })`
 height: 50px;
 width: 90%;
@@ -177,7 +177,7 @@ export const BottomSheetHeadText = styled.Text`
 font-size: 16px;
 font-weight: 500;
 line-height: 19px;
-letter-spacing: 0.005;
+letter-spacing: 0.005px;
 color: rgba(0, 0, 0, 0.85);
 ` 
 

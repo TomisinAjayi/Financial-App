@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Background, DateText, Input, Label,RadioLabel, RadioText, RadioField, RadioInput, SubmitButton, SubmitText, BottomNavigationViewStyle, BottomSheetHead, ClearBtn, BottomSheetHeadText, RadioButtonGroup, RadioWrapper, Outer, Inner, Header } from './style'
-import { Alert,Keyboard,Platform,Pressable,SafeAreaView, Text,TouchableWithoutFeedback, View } from 'react-native';
+import { Alert,Keyboard,Platform,Pressable,SafeAreaView, Text,TextInput,TouchableWithoutFeedback, View } from 'react-native';
 import { BottomSheet } from 'react-native-btr';
 import { useNavigation } from '@react-navigation/native';
 import RadioButton from '../../components/RadioButton';
@@ -14,9 +14,9 @@ const secondservice = ['Sunday Love Offering', 'Minister Tithe', 'General Tithe'
 export default function NewFinance() {
   const navigation = useNavigation();
 
-  const [cash, setCash] = useState("0");
-  const [cheque, setCheque] = useState("0");
-  const [bankTransfer, setBankTransfer] = useState("0");
+  const [cash, setCash] = useState(0);
+  const [cheque, setCheque] = useState(0);
+  const [bankTransfer, setBankTransfer] = useState(0);
   const [service, setService] = useState("Service");
   const [event, setEvent] = useState("Select Event");
   const [event2, setEvent2] = useState("Select Event");
@@ -51,6 +51,11 @@ export default function NewFinance() {
     console.log(`handle change result` + financeRecorded);
 };
 
+useEffect(() => {
+  console.log(cash + " " + cheque + " " + bankTransfer);
+  // console.log(financeRecorded.cash);
+}, []);
+
   const showError = () => {
     console.log("Service: " + service + ", Event: " + event + ", cash: " + cash + ", Cheque: " + cheque + ", Bank Transfer: " + bankTransfer);
     Alert.alert(
@@ -68,28 +73,30 @@ export default function NewFinance() {
     if(service === "") {
       showError();
     } else {
-      console.log("Service: " + service + ", Event: " + event + ", cash: " + financeRecorded.cash + ", Cheque: " + financeRecorded.cheque + ", Bank Transfer: " + financeRecorded.bankTf);
+      console.log(cash + " " + cheque + " " + bankTransfer);
+      console.log("Service: " + service + ", Event: " + event + ", cash: " + cash + ", Cheque: " + cheque + ", Bank Transfer: " + bankTransfer);
       try {
         const response = await axios.post(`http://localhost:3000/api/finances/add`, 
           {
             event: event,
             service: service,
-            cash: financeRecorded.cash,
-            cheque: financeRecorded.cheque,
-            bankTf: financeRecorded.bankTf,
+            cash: cash,
+            cheque: cheque,
+            bankTf: bankTransfer,
           },
         {   
         headers: {
           "Content-Type": "application/json"
-          }
+        }
         });
         if(response.status === 201) {
           navigation.navigate('viewFinance');
         } else {
           console.log("finances not sent to db");
         }
-      } catch {
-        console.log("finances won't pass api");
+      } catch(error) {
+        console.log(error);
+        console.log("finances not sent to api");
       }
       
     }
@@ -132,31 +139,31 @@ export default function NewFinance() {
                 }
                 
                 <Label>Enter Total Cash Counted:</Label>
-                <Input
+                <TextInput
                   placeholder="Cash"
-                  keyboardType="default"
-                  defaultValue={financeRecorded.cash}
-                  onChange={(e) => handleChange(e)}
+                  keyboardType="numeric"
+                  defaultValue={cash}
+                  onChangeText={(e) => setCash(e)}
                   // onSubmitEditing={() => Keyboard.dismiss()}
                   // valor={valor}
                   // onChangeText={(text) => setValor(text)}
                 />
                 <Label>Enter Total Cheque Collected:</Label>
-                <Input
+                <TextInput
                   placeholder="Cheque"
-                  keyboardType="default"
-                  defaultValue={financeRecorded.cheque}
-                  onChange={(e) => handleChange(e)}
+                  keyboardType="numeric"
+                  defaultValue={cheque}
+                  onChangeText={(e) => setCheque(e)}
                   // onSubmitEditing={() => Keyboard.dismiss()}
                   // valor={valor}
                   // onChangeText={(text) => setValor(text)}
                 />
                 <Label>Enter Total Bank Transfer:</Label>
-                <Input
+                <TextInput
                   placeholder="Bank Transfer"
-                  keyboardType="default"
-                  defaultValue={financeRecorded.bankTf}
-                  onChange={(e) => handleChange(e)}
+                  keyboardType="numeric"
+                  defaultValue={bankTransfer}
+                  onChangeText={(e) => setBankTransfer(e)}
                   // onSubmitEditing={() => Keyboard.dismiss()}
                   // valor={valor}
                   // onChangeText={(text) => setValor(text)}
